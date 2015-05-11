@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class table="STORE" name="com.harry.tplugin.bean.Store">
+	    <id name="storeId" column="STOREID" type="text">
+			<generator class="assigned"/>
+		</id>
+		<property name="storeName" column="NAME"/>
+	    <property name="sendScope" column="SENDSCOPE"/>
+	    <property name="index" column="STOREINDEX"/>
+	</class>
+	
+	<query name="getAllStore">
+		<![CDATA[
+	  		from Store
+	  	]]>
+	</query>
+	
+	<query name="getStoreByStoreId">
+		<![CDATA[
+	  		from Store where storeId=?
+	  	]]>
+	</query>
+</hibernate-mapping>
