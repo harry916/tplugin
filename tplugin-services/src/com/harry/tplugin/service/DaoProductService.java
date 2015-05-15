@@ -24,7 +24,7 @@ public class DaoProductService extends AbstractServiceDao implements ProductServ
 
 	@Override
 	public Product getProductByProId(String proId) {
-		List<?> products = this.getDao().query("getProductByProId", new String[]{proId});
+		List<?> products = this.getDao().query("getProductViewByProId", new String[]{proId});
 		return products == null ? null : (Product)products.get(0);
 	}
 

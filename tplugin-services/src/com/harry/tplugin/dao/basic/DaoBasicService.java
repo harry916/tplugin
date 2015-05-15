@@ -43,6 +43,7 @@ public class DaoBasicService implements BasicDao
     	try {
     		return getHibernateTemplate().save(obj);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
     	return 0;
     }
@@ -61,6 +62,7 @@ public class DaoBasicService implements BasicDao
     				create(objs[n]);
     		}
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
     	return objs;
     }
@@ -79,6 +81,7 @@ public class DaoBasicService implements BasicDao
     		}
     		getHibernateTemplate().update(obj);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
         return obj;
     }
@@ -97,6 +100,7 @@ public class DaoBasicService implements BasicDao
     				update(objs[n]);
     		}
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
         return objs;
     }
@@ -111,6 +115,7 @@ public class DaoBasicService implements BasicDao
     		if (obj != null)
     			getHibernateTemplate().delete(obj);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
     }
 
@@ -127,6 +132,7 @@ public class DaoBasicService implements BasicDao
     				delete(objs[n]);
     		}
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
     }
     
@@ -141,6 +147,7 @@ public class DaoBasicService implements BasicDao
     		Object obj = getHibernateTemplate().load(clazz, id);
     		getHibernateTemplate().delete(obj);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
     }
     
@@ -150,6 +157,7 @@ public class DaoBasicService implements BasicDao
 			Object obj = getHibernateTemplate().load(clazz, id);
     		getHibernateTemplate().delete(obj);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
     }
     
@@ -158,6 +166,7 @@ public class DaoBasicService implements BasicDao
     	try {
     		getHibernateTemplate().delete(obj);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
     }
     
@@ -172,6 +181,7 @@ public class DaoBasicService implements BasicDao
     	try {
     		return getHibernateTemplate().get(clazz, id);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
     	return null;
     }
@@ -187,6 +197,7 @@ public class DaoBasicService implements BasicDao
     	try {
     		return getHibernateTemplate().get(clazz, id);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
     	return null;
     }
@@ -201,6 +212,7 @@ public class DaoBasicService implements BasicDao
     	try {
     		return getHibernateTemplate().findByNamedQuery(queryName);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
     	return null;
     }
@@ -217,6 +229,7 @@ public class DaoBasicService implements BasicDao
     	try {
     		return getHibernateTemplate().findByNamedQuery(queryName, values);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
     	return null;
     }

@@ -25,6 +25,9 @@
 				<value>/META-INF/hbm/SendAllow.hbm.xml</value>
 				<value>/META-INF/hbm/SendOrder.hbm.xml</value>
 				<value>/META-INF/hbm/Stock.hbm.xml</value>
+				<value>/META-INF/hbm/AllowTypeLiveView.hbm.xml</value>
+				<value>/META-INF/hbm/AllowTypeNormalView.hbm.xml</value>
+				<value>/META-INF/hbm/AllowTypeUnNormalView.hbm.xml</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

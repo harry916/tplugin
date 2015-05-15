@@ -25,6 +25,7 @@ public interface ProductService {
 	 */
 	public Product update(Product product);
 	
+	public List<Product>
 	/**
 	 * 
 	 * @param proId
