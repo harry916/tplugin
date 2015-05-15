@@ -109,9 +109,9 @@ CREATE OR REPLACE
     SQL SECURITY DEFINER
 VIEW `VIEWSTOCKSUM` AS
     select 
-        `STOCK`.`PROID` AS `PROID`,
-        `STOCK`.`NUMBER` AS `NUMBER`,
-        `STOCK`.`PRENUMBER` AS `PRENUMBER`
+	    `STOCK`.`PROID` AS `PROID`,
+        SUM(`STOCK`.`NUMBER`) AS `NUMBER`,
+        SUM(`STOCK`.`PRENUMBER`) AS `PRENUMBER`
     from
         `STOCK`;
         

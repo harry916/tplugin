@@ -1,6 +1,7 @@
 package com.harry.tplugin.service;
 
-import com.harry.tplugin.bean.Login;
+import java.util.List;
+
 import com.harry.tplugin.bean.Product;
 
 public interface ProductService {
@@ -25,7 +26,7 @@ public interface ProductService {
 	 */
 	public Product update(Product product);
 	
-	public List<Product>
+	public List<Product> getAllProduct();
 	/**
 	 * 
 	 * @param proId

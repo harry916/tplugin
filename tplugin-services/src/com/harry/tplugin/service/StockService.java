@@ -22,7 +22,9 @@ public interface StockService {
 	
 	public Stock findStockByProIdStoreId(String proId, String storeId);
 	
-	public List<Stock> findAllStock(); 
+	public List<Stock> findAllStock();
+	
+	public List<Stock> findAllStockByStoreId(String storeId); 
 	
 	public void deleteStockByProIdStoreId(String proId, String storeId);
 }

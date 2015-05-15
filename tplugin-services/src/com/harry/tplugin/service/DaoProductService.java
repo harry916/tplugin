@@ -28,4 +28,11 @@ public class DaoProductService extends AbstractServiceDao implements ProductServ
 		return products == null ? null : (Product)products.get(0);
 	}
 
+	@Override
+	public List<Product> getAllProduct() {
+		@SuppressWarnings("unchecked")
+		List<Product> list = (List<Product>) this.getDao().query("getAllProductView");
+		return list == null || list.isEmpty() ? null : list;
+	}
+
 }

@@ -1,5 +1,6 @@
 package com.harry.tplugin.service;
 
+import java.util.Iterator;
 import java.util.List;
 
 import com.harry.tplugin.bean.Stock;
@@ -23,10 +24,23 @@ public class DaoStockService extends AbstractServiceDao implements StockService{
 		return (List<Stock>)this.getDao().query("getAllStock");
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Stock findStockByProIdStoreId(String proId, String storeId) {
-		List<?> stockList = (List<?>)this.getDao().query("getStockByProIdStoreId", new String[]{proId, storeId});
-		return stockList == null || stockList.isEmpty() ? null : (Stock)stockList.get(0);
+		List<Stock> list = null;
+		if ("021".equals(storeId))
+		{
+			list = (List<Stock>) this.getDao().query("getStockSHViewByProId", new String[]{proId});
+		}
+		else if ("010".equals(storeId))
+		{
+			list = (List<Stock>) this.getDao().query("getStockBJViewByProId", new String[]{proId});
+		}
+		else if ("020".equals(storeId))
+		{
+			list = (List<Stock>) this.getDao().query("getStockGZViewByProId", new String[]{proId});
+		}
+		return null == list || list.isEmpty() ? null : list.get(0);
 	}
 
 	@Override
@@ -36,6 +50,25 @@ public class DaoStockService extends AbstractServiceDao implements StockService{
 		{
 			this.getDao().delete(stock);
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Stock> findAllStockByStoreId(String storeId) {
+		List<?> list = null;
+		if ("021".equals(storeId))
+		{
+			list = this.getDao().query("getAllStockSHView");
+		}
+		else if ("010".equals(storeId))
+		{
+			list = this.getDao().query("getAllStockBJView");
+		}
+		else if ("020".equals(storeId))
+		{
+			list = this.getDao().query("getAllStockGZView");
+		}
+		return null == list || list.isEmpty() ? null : (List<Stock>)list;
 	}
 
 
