@@ -124,7 +124,7 @@ public class DaoBasicService implements BasicDao
     		if (objs != null)
     		{
     			for (int n = 0; n < objs.length; n++)
-    				create(objs[n]);
+    				delete(objs[n]);
     		}
 		} catch (Exception e) {
 		}
@@ -148,6 +148,14 @@ public class DaoBasicService implements BasicDao
     {
     	try {
 			Object obj = getHibernateTemplate().load(clazz, id);
+    		getHibernateTemplate().delete(obj);
+		} catch (Exception e) {
+		}
+    }
+    
+    public void delete(Class<?> clazz, Object obj)
+    {
+    	try {
     		getHibernateTemplate().delete(obj);
 		} catch (Exception e) {
 		}

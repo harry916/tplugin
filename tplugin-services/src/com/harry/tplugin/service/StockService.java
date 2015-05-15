@@ -11,7 +11,7 @@ public interface StockService {
 	 * @param stock
 	 * @return
 	 */
-	public String createStock(Stock stock);
+	public void createStock(Stock stock);
 	
 	/**
 	 * 
@@ -20,14 +20,9 @@ public interface StockService {
 	 */
 	public Stock updateStock(Stock stock);
 	
-	/**
-	 * 
-	 * @param stockId
-	 * @return
-	 */
-	public Stock findStroeByStockId(String stockId);
+	public Stock findStockByProIdStoreId(String proId, String storeId);
 	
 	public List<Stock> findAllStock(); 
 	
-	public void deleteByStockId(String stockId);
+	public void deleteStockByProIdStoreId(String proId, String storeId);
 }

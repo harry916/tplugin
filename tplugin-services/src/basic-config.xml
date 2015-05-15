@@ -22,8 +22,9 @@
 				<value>/META-INF/hbm/SysMain.hbm.xml</value>
 			 	<value>/META-INF/hbm/Login.hbm.xml</value>
 				<value>/META-INF/hbm/Product.hbm.xml</value> 
-				<value>/META-INF/hbm/Store.hbm.xml</value>
-				<!-- <value>/META-INF/hbm/Stock.hbm.xml</value> -->
+				<value>/META-INF/hbm/SendAllow.hbm.xml</value>
+				<value>/META-INF/hbm/SendOrder.hbm.xml</value>
+				<value>/META-INF/hbm/Stock.hbm.xml</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -56,8 +57,9 @@
 	<bean id="sysMainService" class="com.harry.tplugin.service.DaoSysMainService" parent="service.abstractDao"></bean>
 	<bean id="loginService" class="com.harry.tplugin.service.DaoLoginService" parent="service.abstractDao"></bean>
 	<bean id="productService" class="com.harry.tplugin.service.DaoProductService" parent="service.abstractDao"></bean> 
-	<bean id="storeService" class="com.harry.tplugin.service.DaoStoreService" parent="service.abstractDao"></bean>
-	<!--  <bean id="stockService" class="com.harry.tplugin.service.DaoStockService" parent="service.abstractDao"></bean> -->
+	<bean id="sendAllowService" class="com.harry.tplugin.service.DaoSendAllowService" parent="service.abstractDao"></bean>
+	<bean id="sendOrderService" class="com.harry.tplugin.service.DaoSendOrderService" parent="service.abstractDao"></bean>
+	 <bean id="stockService" class="com.harry.tplugin.service.DaoStockService" parent="service.abstractDao"></bean>
 
 
 </beans>

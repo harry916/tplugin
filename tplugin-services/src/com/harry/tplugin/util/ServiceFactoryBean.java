@@ -5,8 +5,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.harry.tplugin.service.LoginService;
 import com.harry.tplugin.service.ProductService;
+import com.harry.tplugin.service.SendAllowService;
+import com.harry.tplugin.service.SendOrderService;
 import com.harry.tplugin.service.StockService;
-import com.harry.tplugin.service.StoreService;
 import com.harry.tplugin.service.SysMainService;
 
 public class ServiceFactoryBean
@@ -39,9 +40,14 @@ public class ServiceFactoryBean
         return (StockService) getService("stockService");
     }
     
-    public static StoreService getStoreService()
+    public static SendAllowService getSendAllowService()
     {
-        return (StoreService) getService("storeService");
+        return (SendAllowService) getService("sendAllowService");
+    }
+    
+    public static SendOrderService getSendOrderService()
+    {
+        return (SendOrderService) getService("sendOrderService");
     }
     
 }
