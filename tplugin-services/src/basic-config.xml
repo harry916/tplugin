@@ -31,7 +31,8 @@
 				<value>/META-INF/hbm/ProductView.hbm.xml</value>
 				<value>/META-INF/hbm/StockSHView.hbm.xml</value> 
 				<value>/META-INF/hbm/StockBJView.hbm.xml</value> 
-				<value>/META-INF/hbm/StockGZView.hbm.xml</value>  
+				<value>/META-INF/hbm/StockGZView.hbm.xml</value>
+				<value>/META-INF/hbm/StockSumView.hbm.xml</value>   
 			</list>
 		</property>
 		<property name="hibernateProperties">

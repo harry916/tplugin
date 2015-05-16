@@ -3,24 +3,23 @@
 
 <hibernate-mapping>
 
-	<class table="VIEWSTOCKSH" name="com.harry.tplugin.bean.StockSHView">
-	 	<composite-id name="id"  class="com.harry.tplugin.bean.StockViewId">
+	<class table="VIEWSTOCKSUM" name="com.harry.tplugin.bean.StockSumView">
+	 	<composite-id name="id"  class="com.harry.tplugin.bean.StockSumViewId">
 	 		<key-property name="proId" column="PROID"/>
-	 		<key-property name="storeId" column="STOREID"/>
 	 		<key-property name="num" column="NUMBER"/>
 	 	</composite-id>
 	 	<property name="tmpNum" column="PRENUMBER"/>
 	</class>
 	
-	<query name="getAllStockSHView">
+	<query name="getAllStockSumView">
 		<![CDATA[
-	  		from StockSHView
+	  		from StockSumView
 	  	]]>
 	</query>
 	
-	<query name="getStockSHViewByProId">
+	<query name="getStockSumViewByProId">
 		<![CDATA[
-	  		from StockSHView where proId=?
+	  		from StockSumView where proId=?
 	  	]]>
 	</query>
 	

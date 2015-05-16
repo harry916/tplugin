@@ -3,7 +3,9 @@ package com.harry.tplugin.service;
 import java.util.Iterator;
 import java.util.List;
 
+import com.harry.tplugin.bean.SendAllow;
 import com.harry.tplugin.bean.Stock;
+import com.harry.tplugin.bean.StockSumView;
 import com.harry.tplugin.dao.basic.AbstractServiceDao;
 
 public class DaoStockService extends AbstractServiceDao implements StockService{
@@ -71,5 +73,17 @@ public class DaoStockService extends AbstractServiceDao implements StockService{
 		return null == list || list.isEmpty() ? null : (List<Stock>)list;
 	}
 
+	@Override
+	public List<StockSumView> findAllStockSumView() {
+		@SuppressWarnings("unchecked")
+		List<StockSumView> list = (List<StockSumView>)this.getDao().query("getAllStockSumView"); 
+		return null == list || list.isEmpty() ? null : list;
+	}
+
+	@Override
+	public StockSumView findStockSumViewByProId(String proId) {
+		List<?> list = (List<?>)this.getDao().query("getStockSumViewByProId", new String[]{proId});
+		return list == null || list.isEmpty() ? null : (StockSumView)list.get(0);
+	}
 
 }
