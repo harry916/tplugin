@@ -31,6 +31,7 @@ public class UploadFileService {
 	private SysMainService sysMainService = ServiceFactoryBean
 			.getSysMainService();
 	private Map<Integer, String> indexStore = new HashMap<Integer, String>();
+	private Map<Integer, String> indexStore2 = new HashMap<Integer, String>();
 
 	@SuppressWarnings("static-access")
 	private String getValue(Cell ssfCell) {
@@ -39,7 +40,7 @@ public class UploadFileService {
 		if (ssfCell.getCellType() == ssfCell.CELL_TYPE_BOOLEAN) {
 			return String.valueOf(ssfCell.getBooleanCellValue());
 		} else if (ssfCell.getCellType() == ssfCell.CELL_TYPE_NUMERIC) {
-			return String.valueOf(ssfCell.getNumericCellValue());
+			return String.valueOf((int)ssfCell.getNumericCellValue());
 		} else {
 			return String.valueOf(ssfCell.getStringCellValue());
 		}
@@ -49,6 +50,8 @@ public class UploadFileService {
 		if (firstRow)
 			return;
 		int i = row.getFirstCellNum();
+		if (i < 0)
+			return;
 		SysMain sysMain = new SysMain(getValue(row.getCell(i++)),
 				getValue(row.getCell(i++)), getValue(row.getCell(i++)),
 				getValue(row.getCell(i++)));
@@ -59,6 +62,8 @@ public class UploadFileService {
 		if (firstRow)
 			return;
 		int i = row.getFirstCellNum();
+		if (i < 0)
+			return;
 		StoreProceduresUtils.callLoginStatement(getValue(row.getCell(i++)),
 				getValue(row.getCell(i++)), getValue(row.getCell(i++)),
 				getValue(row.getCell(i++)));
@@ -66,8 +71,10 @@ public class UploadFileService {
 
 	private void writeProductToDB(Row row, boolean firstRow) {
 		if (firstRow)
-			return;System.out.println("@mwz");
+			return;
 		int i = row.getFirstCellNum();
+		if (i < 0)
+			return;
 		StoreProceduresUtils.callProductStatement(getValue(row.getCell(i++)),
 				getValue(row.getCell(i++)), getValue(row.getCell(i++)),
 				getValue(row.getCell(i++)));
@@ -75,9 +82,14 @@ public class UploadFileService {
 
 	private void writeSendAllowToDB(Row row, boolean firstRow) {
 		int i = row.getFirstCellNum();
+		if (i < 0)
+			return;
 		int lastCellNum = row.getLastCellNum();
 		if (firstRow) {
+			indexStore.clear();
 			for (i = i + 2; i <= lastCellNum; i++) {
+				if (getValue(row.getCell(i)) == null)
+					continue;
 				indexStore.put(Integer.valueOf(i), getValue(row.getCell(i)));
 			}
 			return;
@@ -86,6 +98,10 @@ public class UploadFileService {
 				getValue(row.getCell(i++)), "");
 		Map<String, Boolean> mp = new HashMap<String, Boolean>();
 		for (; i <= lastCellNum; i++) {
+			if (getValue(row.getCell(i)) == null ||
+					indexStore.get(Integer.valueOf(i)) == null)
+				continue;
+			
 			mp.put(indexStore.get(Integer.valueOf(i)),
 					Boolean.valueOf(getValue(row.getCell(i))));
 		}
@@ -96,10 +112,15 @@ public class UploadFileService {
 
 	private void writeSendOrderToDB(Row row, boolean firstRow) {
 		int i = row.getFirstCellNum();
+		if (i < 0)
+			return;
 		int lastCellNum = row.getLastCellNum();
 		if (firstRow) {
+			indexStore2.clear();
 			for (i = i + 2; i <= lastCellNum; i++) {
-				indexStore.put(Integer.valueOf(i), getValue(row.getCell(i)));
+				if (getValue(row.getCell(i)) == null)
+					continue;
+				indexStore2.put(Integer.valueOf(i), getValue(row.getCell(i)));
 			}
 			return;
 		}
@@ -107,15 +128,18 @@ public class UploadFileService {
 				getValue(row.getCell(i++)), "");
 		Map<Integer, String> mp = new HashMap<Integer, String>();
 		for (; i <= lastCellNum; i++) {
+			if (getValue(row.getCell(i)) == null ||
+					indexStore2.get(Integer.valueOf(i)) == null)
+				continue;
 			mp.put(Integer.valueOf(getValue(row.getCell(i))),
-					indexStore.get(Integer.valueOf(i)));
+					indexStore2.get(Integer.valueOf(i)));
 		}
 		sendOrder.setSendIndex(JacksonUtils.getJsonString(mp));
 		StoreProceduresUtils.callSendOrderStatement(sendOrder.getState(),
 				sendOrder.getProType(), sendOrder.getSendIndex());
 	}
 
-	private void writeToDB(String tableItem, Row row, boolean firstRow) {System.out.println("@@mwz"+tableItem);
+	private void writeToDB(String tableItem, Row row, boolean firstRow) {
 		if ("sysMain".equalsIgnoreCase(tableItem)) {
 			writeSysMainToDB(row, firstRow);
 		} else if ("logIn".equalsIgnoreCase(tableItem)) {
@@ -171,9 +195,14 @@ public class UploadFileService {
 				return "failed";
 			}
 			final int firstRowIndex = sheet.getFirstRowNum();
-			if ("product".equalsIgnoreCase(tableItem))
-			{
+			if ("logIn".equalsIgnoreCase(tableItem)) {
+				StoreProceduresUtils.callLoginStatementInit();
+			} else if ("product".equalsIgnoreCase(tableItem)) {
 				StoreProceduresUtils.callProductStatementInit();
+			} else if ("sendAllow".equalsIgnoreCase(tableItem)) {
+				StoreProceduresUtils.callSendAllowStatementInit();
+			} else if ("sendOrder".equalsIgnoreCase(tableItem)) {
+				StoreProceduresUtils.callSendOrderStatementInit();
 			}
 			for (int i = firstRowIndex, e = sheet.getLastRowNum(); i <= e; i++) {
 				Row row = sheet.getRow(i);
@@ -181,10 +210,7 @@ public class UploadFileService {
 					continue;
 				writeToDB(tableItem, row, firstRowIndex == i);
 			}
-			if ("product".equalsIgnoreCase(tableItem))
-			{
-				StoreProceduresUtils.callProductStatementFinish();
-			}
+			StoreProceduresUtils.callStatementFinish();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "failed exception";

@@ -45,8 +45,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		     <option value="sendAllow">
 		     SendAllow表
 		    </option>
-		     <option value="sendStore">
-		     SendStore表
+		     <option value="sendOrder">
+		     SendOrder表
 		    </option>
 		  </select> 
  	

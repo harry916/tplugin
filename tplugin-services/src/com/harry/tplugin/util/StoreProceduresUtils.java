@@ -21,31 +21,39 @@ public class StoreProceduresUtils {
 		}
 	}
 
+	public static void callLoginStatementInit()
+	{
+		try {
+			cs = conn
+					.prepareCall("{call LOGINPROCEDURES(?,?,?,?)}");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static void callLoginStatement(String userName, String password,
 			String ipAdress, String powerCode) {
 		try {
-			CallableStatement cs = conn
-					.prepareCall("{call LOGINPROCEDURES(?,?,?,?)}");
+			if (null == userName || null == password)
+				return;
 			cs.setString(1, userName);
 			cs.setString(2, password);
 			cs.setString(3, ipAdress);
 			cs.setString(4, powerCode);
-			cs.execute();
+			cs.addBatch();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public static boolean callProductStatementInit()
+	public static void callProductStatementInit()
 	{
 		try {
 			cs = conn
 					.prepareCall("{call PRODUCTPROCEDURES(?,?,?,?)}");
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
 		}
-		return true;
 	}
 	
 	public static void callProductStatement(String proId, String proName,
@@ -53,7 +61,6 @@ public class StoreProceduresUtils {
 		try {
 			if (null ==proId)
 				return;
-			System.out.println("@@@mwz  "+proId+" "+proName+" "+proType+" "+unstandard);
 			cs.setString(1, proId);
 			cs.setString(2, proName);
 			cs.setString(3, proType);
@@ -63,10 +70,11 @@ public class StoreProceduresUtils {
 			e.printStackTrace();
 		}
 	}
-	public static void callProductStatementFinish()
+	public static void callStatementFinish()
 	{
 		try {
-			cs.executeBatch();
+			if (null != cs)
+				cs.executeBatch();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -82,43 +90,71 @@ public class StoreProceduresUtils {
 		}
 	}
 	
+	public static void callSendAllowStatementInit()
+	{
+		try {
+			cs = conn
+					.prepareCall("{call SENDALLOWPROCEDURES(?,?,?)}");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static void callSendAllowStatement(String state, String proType, String storeJson) {
 		try {
-			CallableStatement cs = conn
-					.prepareCall("{call SENDALLOWPROCEDURES(?,?,?)}");
+			if (null == state || null == proType)
+				return;
 			cs.setString(1, state);
 			cs.setString(2, proType);
 			cs.setString(3, storeJson);
-			cs.execute();
+			cs.addBatch();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	
+	public static void callSendOrderStatementInit()
+	{
+		try {
+			cs = conn
+					.prepareCall("{call SENDORDERPROCEDURES(?,?,?)}");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public static void callSendOrderStatement(String state, String proType, String sendIndexJson) {
 		try {
-			CallableStatement cs = conn
-					.prepareCall("{call SENDORDERPROCEDURES(?,?,?)}");
+			if (null == state || null == proType)
+				return;
 			cs.setString(1, state);
 			cs.setString(2, proType);
 			cs.setString(3, sendIndexJson);
-			cs.execute();
+			cs.addBatch();
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void callStockStatementInit()
+	{
+		try {
+			cs = conn
+					.prepareCall("{call STOCKPROCEDURES(?,?,?,?)}");
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public static void callStockStatement(String proId, String storeId, int number, int preNumber) {
 		try {
-			CallableStatement cs = conn
-					.prepareCall("{call STOCKPROCEDURES(?,?,?,?)}");
+			if (null == proId || null == storeId)
+				return;
 			cs.setString(1, proId);
 			cs.setString(2, storeId);
 			cs.setInt(3, number);
 			cs.setInt(4, preNumber);
-			cs.execute();
+			cs.addBatch();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
