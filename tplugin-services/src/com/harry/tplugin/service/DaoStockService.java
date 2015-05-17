@@ -1,9 +1,7 @@
 package com.harry.tplugin.service;
 
-import java.util.Iterator;
 import java.util.List;
 
-import com.harry.tplugin.bean.SendAllow;
 import com.harry.tplugin.bean.Stock;
 import com.harry.tplugin.bean.StockSumView;
 import com.harry.tplugin.dao.basic.AbstractServiceDao;
@@ -12,7 +10,15 @@ public class DaoStockService extends AbstractServiceDao implements StockService{
 
 	@Override
 	public void createStock(Stock stock) {
-		this.getDao().create(stock);
+		Stock sk = findStockByProIdStoreId(stock.getProId(), stock.getStoreId());
+		if (null != sk)
+		{
+			updateStock(stock);
+		}
+		else
+		{
+			this.getDao().create(stock);
+		}
 	}
 
 	@Override

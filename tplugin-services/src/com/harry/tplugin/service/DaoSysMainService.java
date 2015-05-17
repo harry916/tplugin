@@ -12,9 +12,17 @@ public class DaoSysMainService extends AbstractServiceDao implements SysMainServ
      * @param sysMain is the SysMain
      * @return SysMain
      */
-    public String createSysMain(SysMain sysMain)
+    public void createSysMain(SysMain sysMain)
     {
-        return (String) this.getDao().create(sysMain);
+        SysMain sm = findSysMainBySysId(sysMain.getSysId());
+        if (null != sm)
+        {
+        	updateSysMain(sysMain);
+        }
+        else
+        {
+        	this.getDao().create(sysMain);
+        }
     }
 
     /**
@@ -43,7 +51,9 @@ public class DaoSysMainService extends AbstractServiceDao implements SysMainServ
      */
     public List<?> findAllSysMain()
     {
-        return getDao().query("getAllSysMain");
+        @SuppressWarnings("unchecked")
+		List<SysMain> list =  (List<SysMain>) getDao().query("getAllSysMain");
+        return null == list || list.isEmpty() ? null : list;
     }
     
 
@@ -56,7 +66,7 @@ public class DaoSysMainService extends AbstractServiceDao implements SysMainServ
 	public SysMain findSysMainBySysId(String sysId) {
 		if (null == sysId ) return null;
 		List<?> datalist= (List<?>)getDao().query("getSysMainBySysId", new String[]{sysId});
-		return datalist == null ? null : (SysMain)datalist.get(0);
+		return datalist == null || datalist.isEmpty() ? null : (SysMain)datalist.get(0);
 	}
 
 }

@@ -1,7 +1,6 @@
 package com.harry.tplugin.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.harry.tplugin.bean.SendOrder;
 import com.harry.tplugin.dao.basic.AbstractServiceDao;
@@ -10,7 +9,15 @@ public class DaoSendOrderService extends AbstractServiceDao implements SendOrder
 	
 	@Override
 	public void createSendOrder(SendOrder sendOrder) {
-		this.getDao().create(sendOrder);
+		SendOrder so = findSendOrderByStateProType(sendOrder.getState(), sendOrder.getProType());
+		if (null != so)
+		{
+			updateSendOrder(sendOrder);
+		}
+		else
+		{
+			this.getDao().create(sendOrder);
+		}
 	}
 
 	@Override
@@ -21,7 +28,8 @@ public class DaoSendOrderService extends AbstractServiceDao implements SendOrder
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<SendOrder> findAllSendOrder() {
-		return (List<SendOrder>)this.getDao().query("getAllSendOrder");
+		List<SendOrder> list = (List<SendOrder>)this.getDao().query("getAllSendOrder");  
+		return null == list || list.isEmpty() ? null : list;
 	}
 
 	@Override

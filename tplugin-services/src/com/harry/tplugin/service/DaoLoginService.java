@@ -8,8 +8,16 @@ import com.harry.tplugin.dao.basic.AbstractServiceDao;
 public class DaoLoginService extends AbstractServiceDao implements LoginService{
 
 	@Override
-	public String createLogin(Login login) {
-	    return (String) this.getDao().create(login);
+	public void createLogin(Login login) {
+	    Login lg = findLoginByUserName(login.getUserName());
+	    if (null != lg)
+	    {
+	    	updateLogin(login);
+	    }
+	    else
+	    {
+		    this.getDao().create(login);
+	    }
 	}
 
 	@Override
@@ -26,7 +34,7 @@ public class DaoLoginService extends AbstractServiceDao implements LoginService{
 	@Override
 	public Login findLoginByUserName(String userName) {
 		List<?> loginList = (List<?>)getDao().query("getLoginByUserName", new String[]{userName});
-		return loginList == null ? null : (Login)loginList.get(0);
+		return loginList == null || loginList.isEmpty() ? null : (Login)loginList.get(0);
 	}
 
 }

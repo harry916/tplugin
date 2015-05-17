@@ -10,7 +10,7 @@ public interface LoginService {
 	 * @param login
 	 * @return
 	 */
-	public String createLogin(Login login);
+	public void createLogin(Login login);
 	
 	/**
 	 * 

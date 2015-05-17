@@ -11,7 +11,7 @@ public interface ProductService {
 	 * @param product
 	 * @return 
 	 */
-	public String create(Product product);
+	public void create(Product product);
 	
 	/**
 	 * 

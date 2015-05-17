@@ -6,6 +6,7 @@ public class JacksonUtils {
 
 	public static final ObjectMapper objectMapper = new ObjectMapper();
 	
+	//issue
 	public static String getJsonString(Object obj){
 		if (obj == null){
 			return null;

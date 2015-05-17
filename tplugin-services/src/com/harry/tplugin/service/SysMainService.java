@@ -10,9 +10,9 @@ public interface SysMainService
     /**
      * Create sysMain
      * @param sysMain is the SysMain
-     * @return Integer
+     * @return 
      */
-    public String createSysMain(SysMain sysMain);
+    public void createSysMain(SysMain sysMain);
     
     /**
      * Update sysMain

@@ -8,7 +8,15 @@ import com.harry.tplugin.dao.basic.AbstractServiceDao;
 public class DaoSendAllowService extends AbstractServiceDao implements SendAllowService{
 	@Override
 	public void createSendAllow(SendAllow sendAllow) {
-		this.getDao().create(sendAllow);
+		SendAllow sa = findSendAllowByStateProType(sendAllow.getState(), sendAllow.getProType());
+		if (null != sa)
+		{
+			updateSendAllow(sendAllow);
+		}
+		else
+		{
+			this.getDao().create(sendAllow);
+		}
 	}
 
 	@Override
@@ -19,30 +27,26 @@ public class DaoSendAllowService extends AbstractServiceDao implements SendAllow
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<SendAllow> findAllSendAllow() {
-		return (List<SendAllow>)this.getDao().query("getAllSendAllow");
+		List<SendAllow> list = (List<SendAllow>) this.getDao().query("getAllSendAllow");
+		return null == list || list.isEmpty() ? null : list;
 	}
 
 	@Override
 	public SendAllow findSendAllowByStateProType(String state, String proType) {
+		List<?> sendAllowList = null;
 		if ("活体".equals(proType))
 		{
-			List<?> sendAllowList = (List<?>)this.getDao().query("getAllowTypeLiveByState", new String[]{state});
-			return sendAllowList == null || sendAllowList.isEmpty() ? null : (SendAllow)sendAllowList.get(0);
+			sendAllowList = (List<?>)this.getDao().query("getAllowTypeLiveByState", new String[]{state});
 		}
 		else if ("普通器材".equals(proType))
 		{
-			List<?> sendAllowList = (List<?>)this.getDao().query("getAllowTypeNormalByState", new String[]{state});
-			return sendAllowList == null || sendAllowList.isEmpty() ? null : (SendAllow)sendAllowList.get(0);
+			sendAllowList = (List<?>)this.getDao().query("getAllowTypeNormalByState", new String[]{state});
 		}
 		else if ("超标器材".equals(proType))
 		{
-			List<?> sendAllowList = (List<?>)this.getDao().query("getAllowTypeUnNormalByState", new String[]{state});
-			return sendAllowList == null || sendAllowList.isEmpty() ? null : (SendAllow)sendAllowList.get(0);
+			sendAllowList = (List<?>)this.getDao().query("getAllowTypeUnNormalByState", new String[]{state});
 		}
-		else 
-		{
-			return null;
-		}
+		return sendAllowList == null || sendAllowList.isEmpty() ? null : (SendAllow)sendAllowList.get(0);
 	}
 
 	@Override
@@ -57,22 +61,20 @@ public class DaoSendAllowService extends AbstractServiceDao implements SendAllow
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<SendAllow> findAllSendAllowByProType(String proType) {
+		List<SendAllow> list = null;
 		if ("活体".equals(proType))
 		{
-			return (List<SendAllow>)this.getDao().query("getAllAllowTypeLive");
+			list = (List<SendAllow>) this.getDao().query("getAllAllowTypeLive");
 		}
 		else if ("普通器材".equals(proType))
 		{
-			return (List<SendAllow>)this.getDao().query("getAllAllowTypeNormal");
+			list = (List<SendAllow>) this.getDao().query("getAllAllowTypeNormal");
 		}
 		else if ("超标器材".equals(proType))
 		{
-			return (List<SendAllow>)this.getDao().query("getAllAllowTypeUnNormal");
+			list = (List<SendAllow>) this.getDao().query("getAllAllowTypeUnNormal");
 		}
-		else
-		{
-			return null;
-		}
+		return null == list || list.isEmpty() ? null : list;
 	}
 
 
