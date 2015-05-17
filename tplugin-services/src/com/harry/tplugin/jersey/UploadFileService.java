@@ -167,7 +167,9 @@ public class UploadFileService {
 					|| null == map.get("number")) {
 				return "proId/storeId/number can no be null";
 			}
+			StoreProceduresUtils.callStockStatementInit();
 			StoreProceduresUtils.callStockStatement(map.get("proId"), map.get("storeId"), Integer.valueOf(map.get("number")), Integer.valueOf(map.get("preNumber")==null?"-1":map.get("preNumber")));
+			StoreProceduresUtils.callStatementFinish();
 			return "success";
 		} catch (Exception e) {
 			e.printStackTrace();
