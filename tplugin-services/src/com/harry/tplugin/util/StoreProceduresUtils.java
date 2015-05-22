@@ -1,23 +1,61 @@
 package com.harry.tplugin.util;
 
+import java.io.FileInputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class StoreProceduresUtils {
 	private static Connection conn = null;
 	private static CallableStatement cs = null;
+	private static String driverClassName = "";
+	private static String dbUrl = "";
+	private static String username = "";
+	private static String password = "";
 	
 	static {
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager
-					.getConnection(
-							"jdbc:mysql://localhost:3306/tplugin?characterEncoding=utf8",
-							"root", "root");
+			dbInitParamsParse();
+			Class.forName(driverClassName);
+			conn = DriverManager.getConnection(dbUrl + "?characterEncoding=utf8", username, password);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	private static void dbInitParamsParse() {
+		try {
+			String path = StoreProceduresUtils.class.getResource("/").getPath();
+			String websiteUrl = path.replace("/classes", "")
+					.replace("%20", " ") + "dbConfig.properties";
+			Logger4j.getLogger(StoreProceduresUtils.class).debug(
+					"@harry websiteUrl=" + websiteUrl);
+			setParameter(websiteUrl);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void setParameter(String path) throws Exception {
+		Properties properties = new Properties();
+		FileInputStream fileInputStream = null;
+		try {
+			fileInputStream = new FileInputStream(path);
+			properties.load(fileInputStream);
+			driverClassName = properties
+					.getProperty("database.driverClassName");
+			dbUrl = properties.getProperty("database.url");
+			password = properties.getProperty("database.password");
+			username = properties.getProperty("database.username");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (null != fileInputStream) {
+				fileInputStream.close();
+				fileInputStream = null;
+			}
 		}
 	}
 
@@ -31,8 +69,8 @@ public class StoreProceduresUtils {
 		}
 	}
 	
-	public static void callLoginStatement(String userName, String password,
-			String ipAdress, String powerCode) {
+	public static void callLoginStatement(String userName, String password,  String powerCode,
+			String ipAdress) {
 		try {
 			if (null == userName || null == password)
 				return;
@@ -40,7 +78,7 @@ public class StoreProceduresUtils {
 			cs.setString(2, password);
 			cs.setString(3, ipAdress);
 			cs.setString(4, powerCode);
-			cs.addBatch();
+			cs.addBatch();System.out.println("@mwzccccccccccccccc");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -81,7 +119,7 @@ public class StoreProceduresUtils {
 			if (null != cs)
 			{
 				try {
-					cs.close();
+					cs.close();System.out.println("@mwzdddddddddddddd");
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

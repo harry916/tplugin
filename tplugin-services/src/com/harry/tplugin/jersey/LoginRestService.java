@@ -18,6 +18,7 @@ import com.harry.tplugin.util.Cause;
 import com.harry.tplugin.util.JacksonUtils;
 import com.harry.tplugin.util.Logger4j;
 import com.harry.tplugin.util.ServiceFactoryBean;
+import com.harry.tplugin.util.TaoClientWrapper;
 import com.harry.tplugin.util.TpluginType.TPLUGIN_RETURN_CODE;
 
 @Path("/login")
@@ -55,6 +56,7 @@ public class LoginRestService {
             dataMap.put("userName", logInfo.getUserName());
             dataMap.put("token", null);
             resultMap.put("data", dataMap);
+            TaoClientWrapper.getInstance();
         } catch (Exception e) {
             e.printStackTrace();
             resultMap.put("ack", "failed");

@@ -20,13 +20,11 @@ public class Logger4j
         return getLog4jLogger(clazz);
     }
     
-    public static Logger getLog4jLogger(Class clazz)
+    private static Logger getLog4jLogger(Class clazz)
     {
-        String logName = "";
         Logger logger = Logger.getLogger(clazz);
         logger.addAppender(getAppender(clazz.getName()));
         return logger;
-        
     }
     
     public static RollingFileAppender getAppender(String className)
