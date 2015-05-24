@@ -57,6 +57,8 @@ public class SplitAsset {
         private String storeId;
         private int storeNum;
         private int index;
+        private String proType;
+        
         public SplitItem() {
             super();
         }
@@ -102,23 +104,29 @@ public class SplitAsset {
         public void setIndex(int index) {
             this.index = index;
         }
+        public String getProType() {
+            return proType;
+        }
+        public void setProType(String proType) {
+            this.proType = proType;
+        }
         @Override
         public String toString() {
             return "SplitItem [deliveryId=" + deliveryId + ", proId=" + proId
                     + ", proName=" + proName + ", orderNum=" + orderNum
                     + ", storeId=" + storeId + ", storeNum=" + storeNum
-                    + ", index=" + index + "]";
+                    + ", index=" + index + ", proType=" + proType + "]";
         }
         
     }
     
     private void splitProcess(List<SplitItem> splitItems, List<String> proTypeList, List<OrderItem> orderList, List<StoreDetail> storeDetails, String state, int deliveryId)
     {
-        int liveSize = proTypeList.size();
+        int sz = proTypeList.size();
         int orderSize = orderList.size();
         int storeSize = storeDetails.size();
 
-        for (int i = 0; i < liveSize; i++)
+        for (int i = 0; i < sz; i++)
         {
             OrderItem orItem = null;
             String proId = proTypeList.get(i);
@@ -184,6 +192,7 @@ public class SplitAsset {
                             if (proId.equals(storeDetail.getProId()) && storeId.equals(storeDetail.getStoreId()))
                             {
                                 splitItem.setStoreNum(storeDetail.getNum());
+                                splitItem.setProType(storeDetail.getProType());
                                 break;
                             }
                         }
@@ -201,25 +210,16 @@ public class SplitAsset {
     
     public List<SplitItem> getSplitList(String state, List<OrderItem> orderList, List<StoreDetail> storeDetails)
     {
-        Map<String, String> storeIdState = new HashMap<String, String>();
-        storeIdState.put("上海", "021");
-        storeIdState.put("广州", "022");
-        storeIdState.put("北京", "010");
-        
         List<SplitItem> splitItems = new ArrayList<SplitAsset.SplitItem>();
         List<String> waterweeds = new ArrayList<String>();
         List<String> liveBody = new ArrayList<String>();
         List<String> equipment = new ArrayList<String>();
         List<String> unstandardEquipment = new ArrayList<String>();
         
-        SendAllowService sendAllowService = ServiceFactoryBean.getSendAllowService();
-        SendOrderService sendOrderService = ServiceFactoryBean.getSendOrderService();
-
         int storeSize = storeDetails.size();
         for (int i = 0; i < storeSize; i++)
         {
             StoreDetail storeDetail = storeDetails.get(i);
-            String storeId = storeDetail.getStoreId();
             String unstandardStr = storeDetail.getUnstandard();
             int proType = Integer.valueOf(storeDetail.getProType());
             if (ProType.LIVEBODY.getValue() == proType)
@@ -251,17 +251,18 @@ public class SplitAsset {
         {
             splitProcess(splitItems, liveBody, orderList, storeDetails, state, ++deliveryId);
         }
-        if (null != waterweeds)
-        {
-            splitProcess(splitItems, waterweeds, orderList, storeDetails, state, ++deliveryId);
-        }
-        if (null != equipment)
-        {
-            splitProcess(splitItems, equipment, orderList, storeDetails, state, ++deliveryId);
-        }
         if (null != unstandardEquipment)
         {
             splitProcess(splitItems, unstandardEquipment, orderList, storeDetails, state, ++deliveryId);
+        }
+        ++deliveryId;
+        if (null != waterweeds)
+        {
+            splitProcess(splitItems, waterweeds, orderList, storeDetails, state, deliveryId);
+        }
+        if (null != equipment)
+        {
+            splitProcess(splitItems, equipment, orderList, storeDetails, state, deliveryId);
         }
         
         

@@ -34,15 +34,15 @@ public class DaoSendAllowService extends AbstractServiceDao implements SendAllow
 	@Override
 	public SendAllow findSendAllowByStateProType(String state, String proType) {
 		List<?> sendAllowList = null;
-		if ("活体".equals(proType))
+		if ("01".equals(proType))
 		{
 			sendAllowList = (List<?>)this.getDao().query("getAllowTypeLiveByState", new String[]{state});
 		}
-		else if ("普通器材".equals(proType))
+		else if ("02".equals(proType))
 		{
 			sendAllowList = (List<?>)this.getDao().query("getAllowTypeNormalByState", new String[]{state});
 		}
-		else if ("超标器材".equals(proType))
+		else if ("03".equals(proType) || "04".equals(proType))
 		{
 			sendAllowList = (List<?>)this.getDao().query("getAllowTypeUnNormalByState", new String[]{state});
 		}

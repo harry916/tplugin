@@ -13,8 +13,10 @@ import org.apache.log4j.Logger;
 
 import com.harry.tplugin.trade.OrderAsset;
 import com.harry.tplugin.trade.OrderAsset.OrderItem;
+import com.harry.tplugin.trade.SendAsset.DeliveryFormal;
 import com.harry.tplugin.trade.SplitAsset.SplitItem;
 import com.harry.tplugin.trade.StoreAsset.StoreDetail;
+import com.harry.tplugin.trade.SendAsset;
 import com.harry.tplugin.trade.SplitAsset;
 import com.harry.tplugin.trade.StoreAsset;
 import com.harry.tplugin.util.Cause;
@@ -30,6 +32,7 @@ public class CustomerRestService {
     private OrderAsset mOrderAsset = new OrderAsset();
     private StoreAsset mStoreAsset = new StoreAsset();
     private SplitAsset mSplitAsset = new SplitAsset();
+    private SendAsset mSendAsset = new SendAsset();
     
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
@@ -51,6 +54,8 @@ public class CustomerRestService {
         List<OrderItem> orderList = mOrderAsset.getOrderList(trade);
         List<StoreDetail> stDetais = mStoreAsset.getStoreDetailList(orderList);
         List<SplitItem> splitItems = mSplitAsset.getSplitList(orderCustomerInfo.get("receiver_state"), orderList, stDetais);
+        List<DeliveryFormal> deliveryFormal = mSendAsset.getSendList(orderCustomerInfo.get("receiver_state"), splitItems);
+        
         
         return "";
     }
