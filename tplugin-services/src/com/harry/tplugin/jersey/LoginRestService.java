@@ -47,7 +47,7 @@ public class LoginRestService {
             {
                 return Cause.getFailcode(TPLUGIN_RETURN_CODE.TPLUGIN_ERR_LOGIN_PASSWORD.getValue(), "login", "password failed");
             }
-            if (!isIpAddrPermit(getIpAddr(request)))
+            if (!isIpAddrPermit(getIpAddr(request), logInfo))
             {
                 return Cause.getFailcode(TPLUGIN_RETURN_CODE.TPLUGIN_ERR_LOGIN_IP.getValue(), "login", "IP not permitted");
             }
@@ -66,9 +66,12 @@ public class LoginRestService {
 	}
 	
 
-	private boolean isIpAddrPermit(String ip)
+	private boolean isIpAddrPermit(String ip, Login logInfo)
 	{
-	    return true;
+	    String ipList = logInfo.getIpAdress();
+	    if (null != ipList && ipList.contains(ip))
+	        return true;
+	    return false;
 	}
     private String getIpAddr(HttpServletRequest request) {
        String ip = request.getHeader("x-forwarded-for");

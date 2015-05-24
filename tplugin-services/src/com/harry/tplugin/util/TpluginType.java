@@ -13,6 +13,8 @@ public class TpluginType {
          TPLUGIN_ERR_LOGIN_NAME                     (0X08000000),
          TPLUGIN_ERR_LOGIN_PASSWORD             (0X08000001),
          TPLUGIN_ERR_LOGIN_IP             (0X08000002),
+         TPLUGIN_ERR_INVALID_TID            (0X08000003),
+         TPLUGIN_ERR_GET_TRADE_EXCEPTION    (0X08000004),
 
          TPLUGIN_ERR_UNKNOWN                              (0X8000000E),
          

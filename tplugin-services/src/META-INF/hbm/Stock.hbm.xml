@@ -23,4 +23,16 @@
 	  	]]>
 	</query>
 	
+	<query name="getStockByProId">
+		<![CDATA[
+	  		from Stock where proId=?
+	  	]]>
+	</query>
+	
+	<query name="getStockByStoreId">
+		<![CDATA[
+	  		from Stock where storeId=?
+	  	]]>
+	</query>
+	
 </hibernate-mapping>

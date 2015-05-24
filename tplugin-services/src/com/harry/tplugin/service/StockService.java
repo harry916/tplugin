@@ -27,6 +27,8 @@ public interface StockService {
 	
 	public List<Stock> findAllStockByStoreId(String storeId); 
 	
+	public List<Stock> findAllStockByProId(String proId); 
+	
 	public List<StockSumView> findAllStockSumView();
 	
 	public StockSumView findStockSumViewByProId(String proId);

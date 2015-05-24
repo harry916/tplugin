@@ -76,6 +76,10 @@ public class DaoStockService extends AbstractServiceDao implements StockService{
 		{
 			list = this.getDao().query("getAllStockGZView");
 		}
+		else
+		{
+		    list = this.getDao().query("getStockByStoreId", new String[]{storeId});
+		}
 		return null == list || list.isEmpty() ? null : (List<Stock>)list;
 	}
 
@@ -91,5 +95,12 @@ public class DaoStockService extends AbstractServiceDao implements StockService{
 		List<?> list = (List<?>)this.getDao().query("getStockSumViewByProId", new String[]{proId});
 		return list == null || list.isEmpty() ? null : (StockSumView)list.get(0);
 	}
+
+    @Override
+    public List<Stock> findAllStockByProId(String proId) {
+        List<Stock> list = null;
+        list = (List<Stock>) this.getDao().query("getStockByProId", new String[]{proId});
+        return null == list || list.isEmpty() ? null : list;
+    }
 
 }

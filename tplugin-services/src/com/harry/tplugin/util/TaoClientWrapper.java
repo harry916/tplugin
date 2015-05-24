@@ -6,15 +6,20 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.servlet.ServletContext;
-
+import com.taobao.api.ApiException;
+import com.taobao.api.DefaultTaobaoClient;
+import com.taobao.api.TaobaoClient;
+import com.taobao.api.domain.Trade;
 import com.taobao.api.internal.util.WebUtils;
+import com.taobao.api.request.TradeFullinfoGetRequest;
+import com.taobao.api.response.TradeFullinfoGetResponse;
 
 public class TaoClientWrapper {
 	private String mCode;
 	private String mAppKey;
 	private String mAppSecret;
 	private String mUrl; 
+	private String mApiUrl;
 	private String mRedirectUrl;
 	private String mAccessToken;
 	
@@ -76,11 +81,12 @@ public class TaoClientWrapper {
 		try {
 			fileInputStream = new FileInputStream(path);
 			properties.load(fileInputStream);
-			mAppKey = properties.getProperty("taoclient.appkey");
-			mAppSecret = properties.getProperty("taoclient.appsecret");
 			mRedirectUrl = properties.getProperty("taoclient.redirecturl");
 			mUrl = properties.getProperty("taoclient.url");
+			mApiUrl = properties.getProperty("taoclient.apiurl");
 			mCode = properties.getProperty("taoclient.code");
+			mAppKey = properties.getProperty("taoclient.appkey", "23165697");
+			mAppSecret = properties.getProperty("taoclient.appsecret", "67f2880a56f37d0ed90f111160498d4a");
 		} catch (Exception e) {
             Logger4j.getLogger(TaoClientWrapper.class).debug("@harry setParameter", e);
 		} finally {
@@ -104,8 +110,45 @@ public class TaoClientWrapper {
 		return sInstance;
 	}
 
-	public static String getFullTradeInfo()
+	/**
+	 * 
+	 * @param tid
+	 * @param fields  e.g. "tid,type,status,payment,orders"
+	 * @return
+	 */
+	public Trade getTradeFullInfo(long tid, String fields)
 	{
-		return "";
+	    return getTradeFullInfo(tid, fields, 0);
 	}
+	
+	private Trade getTradeFullInfo(long tid, String fields, int callCnt)
+    {
+	    Trade  fullInfo = null;
+        TaobaoClient client=new DefaultTaobaoClient(mApiUrl, mAppKey, mAppSecret);
+        TradeFullinfoGetRequest req=new TradeFullinfoGetRequest();
+        req.setFields(fields);
+        req.setTid(tid);
+        try {
+            TradeFullinfoGetResponse response = client.execute(req , mAccessToken);
+            if (response.isSuccess())
+            {
+                fullInfo = response.getTrade();
+            }
+            else
+            {
+                getAccessTokenInternal();
+                // API服务不可用或超时，则重试
+                if ("520".equals(response.getErrorCode()) && callCnt++ < 3) {
+                    return getTradeFullInfo(tid, mAccessToken, callCnt);
+                } else {
+                    Logger4j.getLogger(TaoClientWrapper.class).debug("@harry getTradeFullInfo 查询订单详情失败 error code: " + response.getErrorCode());
+                    return fullInfo;
+                }
+            }
+        } catch (ApiException e) {
+            Logger4j.getLogger(TaoClientWrapper.class).debug("@harry getTradeFullInfo", e);
+            getAccessTokenInternal();
+        }
+        return fullInfo;
+    }
 }
