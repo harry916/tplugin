@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+	<class table="VIEWSTOCKGZ" name="com.harry.tplugin.bean.StockGZView">
+	 	<composite-id name="id"  class="com.harry.tplugin.bean.StockViewId">
+	 		<key-property name="proId" column="PROID"/>
+	 		<key-property name="storeId" column="STOREID"/>
+	 		<key-property name="num" column="NUMBER"/>
+	 	</composite-id>
+	 	<property name="tmpNum" column="PRENUMBER"/>
+	</class>
+	
+	<query name="getAllStockGZView">
+		<![CDATA[
+	  		from StockGZView
+	  	]]>
+	</query>
+	
+	<query name="getStockGZViewByProId">
+		<![CDATA[
+	  		from StockGZView where proId=?
+	  	]]>
+	</query>
+	
+	
+</hibernate-mapping>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+	<class table="VIEWPRODUCT" name="com.harry.tplugin.bean.ProductView">
+	 	<composite-id name="id"  class="com.harry.tplugin.bean.ProductViewId">
+	 		<key-property name="proId" column="PROID"/>
+	 		<key-property name="proName" column="PRONAME"/>
+	 		<key-property name="proType" column="PROTYPE"/>
+	 		<key-property name="unstandard" column="UNSTANDARD"/>
+	 	</composite-id>
+	</class>
+	
+	<query name="getAllProductView">
+		<![CDATA[
+	  		from ProductView
+	  	]]>
+	</query>
+	
+	<query name="getProductViewByProId">
+		<![CDATA[
+	  		from ProductView where proId=?
+	  	]]>
+	</query>
+	
+	
+</hibernate-mapping>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class table="SENDALLOW" name="com.harry.tplugin.bean.SendAllow">
+		<composite-id>
+			<key-property name="state" column="STATE"/>
+			<key-property name="proType" column="PROTYPE"/>
+		</composite-id>
+	    <property name="storeJson" column="STOREJSON"/>
+	</class>
+	
+	<query name="getAllSendAllow">
+		<![CDATA[
+	  		from SendAllow
+	  	]]>
+	</query>
+	
+	<query name="getSendAllowByStateProType">
+		<![CDATA[
+	  		from SendAllow where state=? and proType=?
+	  	]]>
+	</query>
+	
+	<query name="deleteSendAllowByStateProType">
+		<![CDATA[
+	  		delete from SendAllow where state=? and proType=?
+	  	]]>
+	</query>
+</hibernate-mapping>
