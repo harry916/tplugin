@@ -10,10 +10,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src="js/jquery-1.9.0.min.js"></script>
 <script type="text/javascript">
 	function login(){
-		alert("login");
-		alert($("#userName").val() + $("#password").val());
+// 		alert("login");
+// 		alert($("#userName").val() + $("#password").val());
 // 		location.href = "orderform.jsp";
-		$.post("http://localhost:8080/tplugin-services/rest/login", { userName: $("#userName").val(), password: $("#password").val() },
+		$.post("http://localhost:8080/tplugin-services/login", { userName: $("#userName").val(), password: $("#password").val() },
 			function(data){
 				var dataObj=eval("("+data+")");
 				if (dataObj.ack == "admin"){
