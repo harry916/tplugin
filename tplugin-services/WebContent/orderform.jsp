@@ -74,6 +74,9 @@ table.gridtable td {
 		            							"<td>"+node.gzNum+"</td>"+
 		            						"</tr>";
 		            					});
+		            					
+		            					$("#orderformNum").html("阿里订单号：" + str1);
+		            					$("#payAddress").html("买家地址：" + data.state);
 		            					$("#orderformInfo table").append(html);
 		            				});
 		               	return true ;
@@ -100,6 +103,8 @@ table.gridtable td {
 				"<td>11</td>"+
 			"</tr>";
 // 		});
+		$("#orderformNum").html("阿里订单号：2323233");
+		$("#payAddress").html("买家地址：" + "上海市外滩1号");
 		$("#orderformInfo table").append(html);
   }
   
@@ -125,8 +130,8 @@ table.gridtable td {
  	<div id="orderformInfo">
  		<table class="gridtable">
  			<tr>
- 				<th width="200"><p>阿里订单号：</p></th>
- 				<th colspan="4" width="300"><p>买家地址：</p></th>
+ 				<th width="200"><p id="orderformNum">阿里订单号：</p></th>
+ 				<th colspan="4" width="300"><p id="payAddress">买家地址：</p></th>
  			</tr>
  			<tr>
  				<th colspan="5"><p>运算结果：</p></th>
