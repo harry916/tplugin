@@ -11,11 +11,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript">
 	function login(){
 		alert("login");
-		
-		$.post("http://localhost:8080/tplugin-services/rest/login", { userName: "John", password: "2pm" },
-				   function(data){
-				     alert("Data Loaded: " + data);
-				   });
+		alert($("#userName").val() + $("#password").val());
+// 		location.href = "orderform.jsp";
+		$.post("http://localhost:8080/tplugin-services/rest/login", { userName: $("#userName").val(), password: $("#password").val() },
+			function(data){
+				var dataObj=eval("("+data+")");
+				if (dataObj.ack == "admin"){
+					location.href = "uploadexcel.jsp";
+				}else if (dataObj.ack == "customer"){
+					location.href = "orderform.jsp";
+				}else if (dataObj.ack == "fail"){
+					alert("login failed");
+				}else{
+					alert("login failed");
+				}
+			});
 	}
 </script>
 <title>管理系统</title>
@@ -53,11 +63,11 @@ body {
             <td width="183" background="images/login_07.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td width="21%" height="30"><div align="center"><span class="STYLE3">用户</span></div></td>
-                <td width="79%" height="30"><input type="text" name="userName"  style="height:18px; width:130px; border:solid 1px #cadcb2; font-size:12px; color:#81b432;"></td>
+                <td width="79%" height="30"><input type="text" id="userName" name="userName"  style="height:18px; width:130px; border:solid 1px #cadcb2; font-size:12px; color:#81b432;"></td>
               </tr>
               <tr>
                 <td height="30"><div align="center"><span class="STYLE3">密码</span></div></td>
-                <td height="30"><input type="password" name="password"  style="height:18px; width:130px; border:solid 1px #cadcb2; font-size:12px; color:#81b432;"></td>
+                <td height="30"><input type="password" id="password" name="password"  style="height:18px; width:130px; border:solid 1px #cadcb2; font-size:12px; color:#81b432;"></td>
               </tr>
               <tr>
                 <td height="30">&nbsp;</td>
