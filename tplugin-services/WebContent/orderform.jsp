@@ -18,6 +18,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+	<style type="text/css">
+table.gridtable {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #666666;
+	border-collapse: collapse;
+	text-align:left;
+}
+table.gridtable th {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #dedede;
+}
+table.gridtable td {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #ffffff;
+}
+</style>
+	
   </head>
   <script src="js/jquery-1.9.0.min.js"></script>
   <script type="text/javascript">
@@ -34,10 +60,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		                var regExp=/^\d+(\.\d+)?$/;
 		               if(regExp .test (str1 ))
 		               {
-		            	   $.post("http://localhost:8080/tplugin-services/customer/"+str1, { ff:"ff" },
+		            	   $.get("http://localhost:8080/tplugin-services/rest/customer/"+str1,
 		            				function(data){
-		            					var dataObj=eval("("+data+")");
-		            					
+// 		            					var dataObj=eval("("+data+")");
+										var html = "";
+		            					$.each(data.itemInfoList,function(index,node){
+		            						alert(node.orderNum);
+		            						html += "<tr>"+
+		            							"<td>"+node.proName+"</td>"+
+		            							"<td>"+node.orderNum+"</td>"+
+		            							"<td>"+node.shNum+"</td>"+
+		            							"<td>"+node.bjNum+"</td>"+
+		            							"<td>"+node.gzNum+"</td>"+
+		            						"</tr>";
+		            					});
+		            					$("#orderformInfo table").append(html);
 		            				});
 		               	return true ;
 		               }
@@ -50,6 +87,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		        }  
 		    }  
 		);
+  
+  function addTestData(){
+	  var html = "";
+// 		$.each(data.itemInfoList,function(index,node){
+// 			alert(node.orderNum);
+			html += "<tr>"+
+				"<td>避孕套</td>"+
+				"<td>33</td>"+
+				"<td>11</td>"+
+				"<td>11</td>"+
+				"<td>11</td>"+
+			"</tr>";
+// 		});
+		$("#orderformInfo table").append(html);
+  }
   
   function postOrderformNum(){
 	  $.ajax({
@@ -69,7 +121,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
   <br>
 	<h1>Press CTRL + V to get orderform info</h1>
- 
+	<input type="button" value="测试" onclick="addTestData()"/>
+ 	<div id="orderformInfo">
+ 		<table class="gridtable">
+ 			<tr>
+ 				<th width="200"><p>阿里订单号：</p></th>
+ 				<th colspan="4" width="300"><p>买家地址：</p></th>
+ 			</tr>
+ 			<tr>
+ 				<th colspan="5"><p>运算结果：</p></th>
+ 			</tr>
+ 			<tr>
+ 				<td><p>商品名称</p></td>
+ 				<td><p>购买数量</p></td>
+ 				<td><p>上海</p></td>
+ 				<td><p>北京</p></td>
+ 				<td><p>广州</p></td>
+ 			</tr>
+ 		</table>
+ 	</div>	
 	
 </body>
 </html>

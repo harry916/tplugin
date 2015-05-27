@@ -13,9 +13,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 // 		alert("login");
 // 		alert($("#userName").val() + $("#password").val());
 // 		location.href = "orderform.jsp";
-		$.post("http://localhost:8080/tplugin-services/login", { userName: $("#userName").val(), password: $("#password").val() },
-			function(data){
-				var dataObj=eval("("+data+")");
+		$.post("http://localhost:8080/tplugin-services/rest/login", { userName: $("#userName").val(), password: $("#password").val() },
+			function(dataObj){
+// 				var dataObj=eval("("+data+")");
+				alert(dataObj);
 				if (dataObj.ack == "admin"){
 					location.href = "uploadexcel.jsp";
 				}else if (dataObj.ack == "customer"){
