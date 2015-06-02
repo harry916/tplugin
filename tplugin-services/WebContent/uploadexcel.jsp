@@ -19,20 +19,63 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
   </head>
-  
+  <style type="text/css">
+table.gridtable {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #666666;
+	border-collapse: collapse;
+	text-align:left;
+}
+table.gridtable th {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #dedede;
+}
+table.gridtable td {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #ffffff;
+}
+</style>
+  <style type="text/css">
+body {background:url(images/0452.jpg) repeat-x;text-align:center}
+
+.upload{ margin:0 auto; width:800px; height:600px; background-color:#ffffff;} 
+</style>
  <!--  <body>
     This is my JSP page. <br>
   </body> -->
   
   <body>
-  This is my JSP page. <br>
+    <%
+String permission=request.getParameter("permission");
+if (null != permission){
+	if (!permission.equals("admin")){
+		response.sendRedirect("index.jsp");
+	    return;
+	}
+}else{
+	response.sendRedirect("index.jsp");
+    return;
+}
+
+%>
+  
+	<div class="upload">
 	<h1>File Upload with Jersey</h1>
- 
 	<form action="rest/upload/excel" method="post" enctype="multipart/form-data">
- 
- 		<p> Select a table:</p>
-		 <select type="select" name="tableItem">
-		 
+ 	<table class="gridtable">
+ 			<tr>
+ 				<th width="200">Select a table</th>
+ 				<th width="300">
+ 				<select type="select" name="tableItem">
 		    <option value="sysMain">
 		     SysMain表
 		    </option>
@@ -48,15 +91,45 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		     <option value="sendOrder">
 		     SendOrder表
 		    </option>
-		  </select> 
+		  </select> </p></th>
+ 			</tr>
+ 			<tr>
+ 				<td>Select a file : <input type="file" name="file" size="45" /></td>
+ 				<td><input type="submit" value="Upload It" /></td>
+ 			</tr>
+ 		</table>
+ 		</form>
+<!-- 	<form action="rest/upload/excel" method="post" enctype="multipart/form-data"> -->
+ 
+<!--  		<p> Select a table:</p> -->
+<!-- 		 <select type="select" name="tableItem"> -->
+		 
+<!-- 		    <option value="sysMain"> -->
+<!-- 		     SysMain表 -->
+<!-- 		    </option> -->
+<!-- 		    <option value="login"> -->
+<!-- 		     Login表 -->
+<!-- 		    </option> -->
+<!-- 		     <option value="product"> -->
+<!-- 		     Product表 -->
+<!-- 		    </option> -->
+<!-- 		     <option value="sendAllow"> -->
+<!-- 		     SendAllow表 -->
+<!-- 		    </option> -->
+<!-- 		     <option value="sendOrder"> -->
+<!-- 		     SendOrder表 -->
+<!-- 		    </option> -->
+<!-- 		  </select>  -->
  	
  
-	   <p>
-		Select a file : <input type="file" name="file" size="45" />
-	   </p>
+<!-- 	   <p> -->
+<!-- 		Select a file : <input type="file" name="file" size="45" /> -->
+<!-- 	   </p> -->
  
-	   <input type="submit" value="Upload It" />
-	</form>
+<!-- 	   <input type="submit" value="Upload It" /> -->
+<!-- 	</form> -->
+	</div>
+	
  
 </body>
 </html>
