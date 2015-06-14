@@ -45,31 +45,19 @@ table.gridtable td {
 }
 </style>
   <style type="text/css">
-body {background:url(images/0452.jpg) repeat-x;text-align:center}
+body {text-align:center}
 
-.upload{ margin:0 auto; width:800px; height:600px; background-color:#ffffff;} 
+.upload{ margin:0 auto; width:800px; height:400px; background-color:#ffffff;} 
 </style>
  <!--  <body>
     This is my JSP page. <br>
   </body> -->
   
   <body>
-    <%
-String permission=request.getParameter("permission");
-if (null != permission){
-	if (!permission.equals("admin")){
-		response.sendRedirect("index.jsp");
-	    return;
-	}
-}else{
-	response.sendRedirect("index.jsp");
-    return;
-}
-
-%>
+    <br>
   
 	<div class="upload">
-	<h1>File Upload with Jersey</h1>
+
 	<form action="rest/upload/excel" method="post" enctype="multipart/form-data">
  	<table class="gridtable">
  			<tr>

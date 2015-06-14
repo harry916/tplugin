@@ -18,9 +18,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 // 				var dataObj=eval("("+data+")");
 // 				alert(dataObj);
 				if (dataObj.ack == "admin"){
-					location.href = "uploadexcel.jsp?permission=admin";
+					location.href = "indexadmin.jsp?permission=admin";
 				}else if (dataObj.ack == "customer"){
-					location.href = "orderform.jsp?permission=customer";
+					location.href = "indexorderform.jsp?permission=customer";
 				}else if (dataObj.ack == "fail"){
 					alert("login failed");
 				}else{

@@ -44,9 +44,9 @@ table.gridtable td {
 }
 </style>
 	<style type="text/css">
-body {background:url(images/0452.jpg) repeat-x;text-align:center}
+body {text-align:center}
 
-.upload{ margin:0 auto; width:800px; height:600px; background-color:#ffffff;} 
+.upload{ margin:0 auto; width:800px; height:500px; background-color:#ffffff;} 
 </style>
   </head>
   <script src="js/jquery-1.9.0.min.js"></script>
@@ -128,25 +128,13 @@ body {background:url(images/0452.jpg) repeat-x;text-align:center}
   </body> -->
   
   <body>
-  <%
-String permission=request.getParameter("permission");
-if (null != permission){
-	if (!permission.equals("customer")){
-		response.sendRedirect("index.jsp");
-	    return;
-	}
-}else{
-	response.sendRedirect("index.jsp");
-    return;
-}
-
-%>
+  
 
 
   <div class="upload">
   <br>
-	<h1>Press CTRL + V to get orderform info</h1>
-	<input type="button" value="测试" onclick="addTestData()"/>
+<!-- 	<h1>Press CTRL + V to get orderform info</h1> -->
+<!-- 	<input type="button" value="测试" onclick="addTestData()"/> -->
  	<div id="orderformInfo">
  		<table class="gridtable">
  			<tr>
