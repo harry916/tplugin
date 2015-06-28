@@ -25,7 +25,7 @@ table.gridtable {
 	font-size:11px;
 	color:#333333;
 	border-width: 1px;
-	border-color: #666666;
+	border-color: #ffffff;
 	border-collapse: collapse;
 	text-align:left;
 }
@@ -33,21 +33,21 @@ table.gridtable th {
 	border-width: 1px;
 	padding: 8px;
 	border-style: solid;
-	border-color: #666666;
-	background-color: #dedede;
+/* 	border-color: #666666; */
+	background:#b5cfd2 url('images/cell-blue.jpg');
 }
 table.gridtable td {
 	border-width: 1px;
 	padding: 8px;
 	border-style: solid;
-	border-color: #666666;
+/* 	border-color: #666666; */
 	background-color: #ffffff;
 }
 </style>
   <style type="text/css">
-body {text-align:center}
+body {text-align:center;background-color:#2A8DDA;}
 
-.upload{ margin:0 auto; width:800px; height:400px; background-color:#ffffff;} 
+.upload{ margin:0 auto; width:600px; background-color:#ffffff;} 
 </style>
  <!--  <body>
     This is my JSP page. <br>
@@ -55,7 +55,19 @@ body {text-align:center}
   
   <body>
     <br>
-  
+  <%
+String permission=request.getParameter("permission");
+if (null != permission){
+	if (!permission.equals("admin")){
+		response.sendRedirect("index.jsp");
+	    return;
+	}
+}else{
+	response.sendRedirect("index.jsp");
+    return;
+}
+
+%>
 	<div class="upload">
 
 	<form action="rest/upload/excel" method="post" enctype="multipart/form-data">

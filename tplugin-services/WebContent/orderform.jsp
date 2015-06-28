@@ -24,7 +24,7 @@ table.gridtable {
 	font-size:11px;
 	color:#333333;
 	border-width: 1px;
-	border-color: #666666;
+	border-color: #C6FBFF;
 	border-collapse: collapse;
 	text-align:left;
 }
@@ -32,21 +32,21 @@ table.gridtable th {
 	border-width: 1px;
 	padding: 8px;
 	border-style: solid;
-	border-color: #666666;
-	background-color: #dedede;
+/* 	border-color: #666666; */
+	background:#b5cfd2 url('images/cell-blue.jpg');
 }
 table.gridtable td {
 	border-width: 1px;
 	padding: 8px;
 	border-style: solid;
-	border-color: #666666;
+/* 	border-color: #666666; */
 	background-color: #ffffff;
 }
 </style>
 	<style type="text/css">
-body {text-align:center}
+body {text-align:center;background-color:#2A8DDA;}
 
-.upload{ margin:0 auto; width:800px; height:500px; background-color:#ffffff;} 
+.upload{ margin:0 auto; width:500px; background-color:#ffffff;} 
 </style>
   </head>
   <script src="js/jquery-1.9.0.min.js"></script>
@@ -128,11 +128,23 @@ body {text-align:center}
   </body> -->
   
   <body>
-  
+  <%
+String permission=request.getParameter("permission");
+if (null != permission){
+	if (!permission.equals("customer")){
+		response.sendRedirect("index.jsp");
+	    return;
+	}
+}else{
+	response.sendRedirect("index.jsp");
+    return;
+}
+
+%>
 
 
   <div class="upload">
-  <br>
+
 <!-- 	<h1>Press CTRL + V to get orderform info</h1> -->
 <!-- 	<input type="button" value="测试" onclick="addTestData()"/> -->
  	<div id="orderformInfo">
